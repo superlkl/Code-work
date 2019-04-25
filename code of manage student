@@ -1,0 +1,209 @@
+package lkl;
+
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Manger Stu=new Manger();
+		Stu.initList(5);
+		int r=1;
+		Scanner a=new Scanner(System.in);
+		while(r==1){
+			System.out.println("---------******************-------");
+			System.out.println("欢迎来到学生管理系统");
+			System.out.println("1.整体打印所有学生信息");
+			System.out.println("2.修改学生信息");
+			System.out.println("3.通过名字查找学生信息");
+			System.out.println("4.通过学号查找学生信息");
+			System.out.println("5.添加学生信息");
+			System.out.println("6.退出系统");
+			System.out.println("---------******************-------");
+			System.out.println("请输入管理内容");
+		
+
+
+		int b=a.nextInt();
+		switch (b) {
+		case 1:
+			Stu.PrintAll();
+			break;
+		case 2:
+			Stu.modifyStu();
+			break;
+		case 3:
+			Stu.findStuByName();
+			break;
+		case 4:
+			Stu.findStuByNum();
+			break;
+		case 5:
+			Stu.addStu();
+			break;
+		default:
+			System.out.println("退出系统！");
+			r=0;
+			break;
+		}
+		}
+		a.close();
+	}
+
+}
+package lkl;
+
+public class Student {
+	private int Number;
+	private String Name;
+	private int MathGrages;
+	private int ElingshGrages;
+	private int PEGrages;
+	
+	public Student(String name,int number,int math,int English,int PE) {
+		this.Name=name;
+		this.Number=number;
+		this.MathGrages=math;
+		this.ElingshGrages=English;
+		this.PEGrages=PE;
+	}
+	public String getName(){return Name;}
+	public int getMathGrages(){	return MathGrages;}
+	public int getElingshGrages(){return ElingshGrages;}
+	public int getPEGrages(){return PEGrages;}	
+	public int getNumber(){	return Number;	}
+	
+	
+	
+}
+package lkl;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Manger {
+	public Student[] sarr;
+	public int num;
+	ArrayList<Student> l=new ArrayList<Student>();
+	public void initList(int num){
+		
+		Student stu1=new Student("张一", 1, 88, 77, 66);
+		Student stu2=new Student("李二", 2, 70, 70, 60);
+		Student stu3=new Student("王三 ", 3, 80, 60, 68);
+		Student stu4=new Student("李四", 4, 90, 80, 65);
+		Student stu5=new Student("赵五", 5, 33, 60, 62);
+				
+		l.add(stu1);
+		l.add(stu2);
+		l.add(stu3);
+		l.add(stu4);
+		l.add(stu5);
+	
+	}
+
+	public void addStu() {// 添加学生信息
+		Scanner s = new Scanner(System.in);
+		String newName;
+		int newElishGrages, newMathGrages, newPEGrages ,newNumber;
+		System.out.println("请输入新学号：");
+		newNumber = s.nextInt();
+		System.out.println("请输入新名字：");
+		newName = s.next();
+		System.out.println("请输入新英语成绩：");
+		newElishGrages = s.nextInt();
+		System.out.println("请输入新数学成绩：");
+		newMathGrages = s.nextInt();
+		System.out.println("请输入新体育成绩：");
+		newPEGrages = s.nextInt();
+		Student d = new Student(newName, newNumber,newElishGrages, newMathGrages, newPEGrages);
+		l.add(d);
+		System.out.println("添加成功");
+		s.close();
+		return;
+		
+	}
+	
+	public void modifyStu() {         // 修改学生的信息
+		Scanner s = new Scanner(System.in);
+		System.out.print("请输入要修改的学生的学号(小于"+l.size()+")");
+		boolean flag=true;
+		int a=s.nextInt();
+		for (int i = 0; i < l.size(); i++) {
+			if((a+1)==l.get(i).getNumber()){
+				System.out.println("该学生信息如下");
+				System.out.println("学号:" + l.get(a-1).getNumber() + "\n姓名:" + l.get(a-1).getName() + "\n英语成绩:"
+						+ l.get(a-1).getElingshGrages() + "\n数学成绩:" + l.get(a-1).getMathGrages() + "\n体育成绩:" + l.get(a-1).getPEGrages() + "\n");
+				flag=false;
+			}
+		}
+		if(flag)
+			{
+			System.out.println("没有此学号");
+			}
+		else{
+			String newName;
+			int newElishGrages, newMathGrages, newPEGrages;
+			System.out.println("请输入新名字：");
+			newName = s.next();
+			System.out.println("请输入新英语成绩：");
+			newElishGrages = s.nextInt();
+			System.out.println("请输入新数学成绩：");
+			newMathGrages = s.nextInt();
+			System.out.println("请输入新体育成绩：");
+			newPEGrages = s.nextInt();
+			Student d = new Student(newName, l.get(a-1).getNumber(),newElishGrages, newMathGrages, newPEGrages);
+			for (int i = 0; i < l.size(); i++) {
+				if(a==l.get(i).getNumber()){
+					l.set(a-1, d);
+				}
+			}
+			s.close();
+			System.out.println("修改成功");
+			System.out.println("该学生信息如下");
+			System.out.println("学号:" + l.get(a-1).getNumber() + "\n姓名:" + l.get(a-1).getName() + "\n英语成绩:"
+					+ l.get(a-1).getElingshGrages() + "\n数学成绩:" + l.get(a-1).getMathGrages() + "\n体育成绩:" + l.get(a-1).getPEGrages() + "\n");
+		}
+		
+	}
+
+	public void findStuByName() {             // 通过名字查找学生的信息
+		Scanner s = new Scanner(System.in);
+		boolean flag=true;
+		System.out.print("请输入要查找的学生的姓名");
+		String b=s.next();
+		for (int i = 0; i < l.size(); i++) {
+			if (l.get(i).getName().equals(b)) {
+				System.out.println("学号:" + l.get(i).getNumber() + "\n姓名:" + l.get(i).getName() + "\n英语成绩:"
+						+ l.get(i).getElingshGrages() + "\n数学成绩:" + l.get(i).getMathGrages() + "\n体育成绩:" + l.get(i).getPEGrages() + "\n");
+				flag=false;
+			}
+			s.close();
+		}
+		if(flag)
+			System.out.println("没有此学生");
+	}
+	public void findStuByNum() {             // 通过学号查找学生的信息
+		Scanner s = new Scanner(System.in);
+		boolean flag=true;
+		System.out.print("请输入要查找的学生的学号(小于"+l.size()+")");
+		int b=s.nextInt();
+		for (int i = 0; i < l.size(); i++) {
+			if (b==l.get(i).getNumber()) {
+				System.out.println("学号:" + l.get(i).getNumber() + "\n姓名:" + l.get(i).getName() + "\n英语成绩:"
+						+ l.get(i).getElingshGrages() + "\n数学成绩:" + l.get(i).getMathGrages() + "\n体育成绩:" + l.get(i).getPEGrages() + "\n");
+				flag=false;
+			}	
+			s.close();
+		}
+		if(flag)
+			System.out.println("没有此学生");
+	}
+
+	public void PrintAll() {         // 整体打印学生的信息
+		for (int i = 0; i < l.size(); i++) {
+			System.out.println("学号:" + l.get(i).getNumber() + "\n姓名:" + l.get(i).getName() + "\n英语成绩:"
+					+ l.get(i).getElingshGrages() + "\n数学成绩:" + l.get(i).getMathGrages() + "\n体育成绩:" + l.get(i).getPEGrages() + "\n");
+
+		}
+	}
+}
